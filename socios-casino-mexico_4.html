@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Convertite en Socio</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;800&display=swap');
+
+:root{
+  --bg: #060a14;
+  --bg2: #0c1424;
+  --gold: #e8c469;
+  --gold-dim: #a5813a;
+  --cyan: #2dd4e0;
+  --green: #35c97a;
+  --red: #e0524d;
+  --ink: #eef2f8;
+  --muted: #8a95ab;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:'Inter',sans-serif;
+  overflow-x:hidden;
+}
+
+/* felt texture background */
+.felt{
+  position:fixed;inset:0;z-index:0;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(45,212,224,0.06), transparent 40%),
+    radial-gradient(circle at 80% 70%, rgba(232,196,105,0.07), transparent 45%),
+    var(--bg);
+}
+
+section{
+  position:relative;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:80px 24px;
+  z-index:1;
+}
+
+.eyebrow{
+  font-family:'Bebas Neue',sans-serif;
+  letter-spacing:6px;
+  color:var(--gold);
+  font-size:14px;
+  margin-bottom:18px;
+  opacity:0;
+  animation:riseIn .8s ease forwards;
+}
+h1,h2{
+  font-family:'Bebas Neue',sans-serif;
+  font-weight:400;
+  letter-spacing:1px;
+  line-height:1.05;
+}
+
+/* ---------- HERO ---------- */
+#hero{
+  text-align:center;
+}
+#hero h1{
+  font-size:clamp(44px,8vw,96px);
+  background:linear-gradient(180deg,#fff, var(--gold) 90%);
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+  opacity:0;
+  animation:riseIn 1s .2s ease forwards;
+}
+#hero .sub{
+  margin-top:22px;
+  font-size:clamp(16px,2.2vw,22px);
+  color:var(--muted);
+  max-width:640px;
+  opacity:0;
+  animation:riseIn 1s .5s ease forwards;
+}
+.network-hero{
+  position:relative;
+  width:min(560px,90vw);height:320px;
+  margin:40px auto 10px;
+}
+.network-hero canvas{width:100%;height:100%;display:block;}
+.scroll-cue{
+  position:absolute;bottom:36px;left:50%;transform:translateX(-50%);
+  color:var(--muted);font-size:13px;letter-spacing:3px;
+  animation:bob 1.8s ease-in-out infinite;
+}
+@keyframes bob{0%,100%{transform:translate(-50%,0);}50%{transform:translate(-50%,10px);}}
+@keyframes riseIn{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+
+/* reveal on scroll */
+.reveal{opacity:0;transform:translateY(30px);transition:all .8s cubic-bezier(.2,.7,.2,1);}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+/* ---------- HOOK ---------- */
+#hook{max-width:920px;margin:0 auto;text-align:center;}
+#hook h2{font-size:clamp(30px,5vw,54px);color:#fff;margin-bottom:16px;}
+#hook p{color:var(--muted);font-size:18px;max-width:640px;margin:0 auto 40px;}
+.perks{display:flex;gap:22px;flex-wrap:wrap;justify-content:center;}
+.perk{
+  background:linear-gradient(180deg,#0f1a2e,#0a1220);
+  border:1px solid rgba(232,196,105,.2);
+  border-radius:16px;
+  padding:26px 22px;
+  width:230px;
+  transition:transform .3s ease, border-color .3s ease;
+}
+.perk:hover{transform:translateY(-6px);border-color:var(--gold);}
+.perk .ic{font-size:30px;margin-bottom:10px;display:block;}
+.perk b{display:block;color:var(--gold);font-size:15px;margin-bottom:6px;}
+.perk span{color:var(--muted);font-size:13px;}
+
+/* ---------- NIVELES ---------- */
+#niveles{max-width:960px;margin:0 auto;text-align:center;}
+#niveles h2{font-size:clamp(30px,5vw,50px);margin-bottom:8px;}
+#niveles .sub{color:var(--muted);margin-bottom:50px;}
+.network-diagram{position:relative;width:min(720px,94vw);height:440px;margin:0 auto;}
+.network-diagram canvas{width:100%;height:100%;display:block;}
+.lvl-legend{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-top:10px;}
+.lvl-tag{
+  display:flex;align-items:center;gap:8px;
+  background:#0d1729;border:1px solid rgba(255,255,255,.08);
+  border-radius:30px;padding:8px 16px;font-size:13px;color:var(--muted);
+  opacity:0;transform:translateY(14px);transition:all .5s ease;
+}
+.lvl-tag.in{opacity:1;transform:translateY(0);}
+.lvl-tag b{color:var(--cyan);font-family:'Bebas Neue';font-size:16px;}
+.lvl-tag .dot-c{width:10px;height:10px;border-radius:50%;}
+.total-badge{
+  margin-top:20px;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:20px;
+  color:#050708;
+  background:linear-gradient(120deg,var(--gold),#fff2cf);
+  padding:12px 30px;
+  border-radius:40px;
+  letter-spacing:1px;
+}
+
+/* ---------- CALCULADORA ---------- */
+#calc{max-width:760px;margin:0 auto;text-align:center;}
+#calc h2{font-size:clamp(28px,5vw,46px);margin-bottom:6px;}
+#calc .sub{color:var(--muted);margin-bottom:34px;}
+.calc-card{
+  background:#0d1729;border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;padding:30px 26px;width:100%;
+}
+.row-in{display:flex;flex-direction:column;gap:16px;margin-bottom:18px;}
+.field{display:flex;justify-content:space-between;align-items:center;gap:14px;}
+.field label{font-size:13px;color:var(--muted);text-align:left;width:180px;}
+.field small{color:var(--gold-dim);display:block;font-size:11px;}
+input[type=range]{flex:1;accent-color:var(--cyan);}
+.field .val{font-family:'Bebas Neue',sans-serif;color:var(--cyan);font-size:18px;width:100px;text-align:right;}
+.calc-result{
+  margin-top:20px;padding-top:20px;border-top:1px dashed rgba(255,255,255,.15);
+  display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:10px;
+}
+.calc-result .lab{color:var(--muted);font-size:14px;}
+.calc-result .num{font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--gold);}
+
+/* ---------- PAGOS ---------- */
+#pagos{max-width:900px;margin:0 auto;text-align:center;}
+#pagos h2{font-size:clamp(30px,5vw,50px);margin-bottom:40px;}
+.clockwrap{display:flex;gap:50px;align-items:center;flex-wrap:wrap;justify-content:center;}
+.clock{
+  width:150px;height:150px;border-radius:50%;
+  border:3px solid var(--gold);position:relative;
+  box-shadow:0 0 30px rgba(232,196,105,.15);
+  flex:none;
+}
+.hand{position:absolute;bottom:50%;left:50%;transform-origin:bottom;background:var(--cyan);}
+.hand.h{width:4px;height:36px;margin-left:-2px;animation:tick 12s linear infinite;}
+.hand.m{width:3px;height:52px;margin-left:-1.5px;background:var(--gold);animation:tick 4s linear infinite;}
+@keyframes tick{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.clock:after{content:"1AM";position:absolute;bottom:-30px;left:50%;transform:translateX(-50%);font-family:'Bebas Neue';color:var(--gold);letter-spacing:2px;}
+.paylist{text-align:left;display:flex;flex-direction:column;gap:14px;max-width:420px;}
+.paylist div{color:var(--muted);font-size:14px;}
+.paylist b{color:#fff;}
+
+/* ---------- PASOS ---------- */
+#pasos{max-width:900px;margin:0 auto;text-align:center;}
+#pasos h2{font-size:clamp(30px,5vw,50px);margin-bottom:40px;}
+.steps{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;counter-reset:step;}
+.step{
+  width:190px;background:#0d1729;border:1px solid rgba(255,255,255,.07);
+  border-radius:16px;padding:26px 18px;position:relative;
+}
+.step:before{
+  counter-increment:step;content:counter(step);
+  font-family:'Bebas Neue';font-size:42px;color:rgba(232,196,105,.25);
+  display:block;margin-bottom:6px;
+}
+.step p{font-size:13.5px;color:var(--muted);}
+
+/* ---------- CTA ---------- */
+#cta{text-align:center;}
+#cta h2{font-size:clamp(34px,7vw,70px);color:#fff;margin-bottom:14px;}
+#cta p{color:var(--muted);margin-bottom:30px;}
+.btn{
+  font-family:'Bebas Neue';letter-spacing:2px;font-size:20px;
+  background:linear-gradient(120deg,var(--gold),#fff2cf);
+  color:#050708;padding:16px 44px;border-radius:50px;border:none;
+  cursor:pointer;box-shadow:0 0 40px rgba(232,196,105,.25);
+  transition:transform .25s ease;
+}
+.btn:hover{transform:translateY(-3px) scale(1.03);}
+
+/* footer */
+footer{
+  position:relative;z-index:1;
+  padding:36px 24px 44px;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.recash-logo{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:22px;letter-spacing:3px;color:#fff;
+  display:flex;align-items:center;gap:8px;
+}
+.recash-logo .dotmark{
+  width:9px;height:9px;border-radius:50%;
+  background:var(--gold);
+  box-shadow:0 0 10px var(--gold);
+}
+footer small{color:var(--muted);font-size:11px;letter-spacing:1px;}
+
+/* nav dots */
+.dots{
+  position:fixed;right:22px;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:12px;z-index:10;
+}
+.dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.2);cursor:pointer;transition:.3s;}
+.dot.active{background:var(--gold);box-shadow:0 0 8px var(--gold);}
+@media (max-width:640px){.dots{display:none;}}
+</style>
+</head>
+<body>
+
+<div class="felt"></div>
+
+<div class="dots" id="dots"></div>
+
+<section id="hero">
+  <h1>CONVERTITE EN SOCIO<br>SIN PONER UN PESO<br>PARA SIEMPRE</h1>
+  <div class="network-hero"><canvas id="heroCanvas"></canvas></div>
+  <p class="sub">La casa siempre gana. Ahora vos también.</p>
+  <div class="scroll-cue">SCROLL ↓</div>
+</section>
+
+<section id="hook">
+  <div class="eyebrow reveal">LA PROPUESTA</div>
+  <h2 class="reveal">LA CASA SIEMPRE GANA.<br>AHORA VOS TAMBIÉN.</h2>
+  <p class="reveal">Sumate al proyecto de casino legal en México y convertite en socio de cada cliente que traigas, para siempre. No vendés nada, no invertís nada: solo abrís la puerta.</p>
+  <div class="perks">
+    <div class="perk reveal"><span class="ic">💰</span><b>Comisión de por vida</b><span>Sobre cada cliente que refieras, sin vencimiento.</span></div>
+    <div class="perk reveal"><span class="ic">⚡</span><b>Cobrás en menos de 24 hs</b><span>Pagos diarios, sin esperas ni trámites.</span></div>
+    <div class="perk reveal"><span class="ic">🔗</span><b>Tu link, tu red</b><span>Vos abrís la puerta, nosotros el trabajo.</span></div>
+  </div>
+</section>
+
+<section id="niveles">
+  <div class="eyebrow reveal">CÓMO FUNCIONA</div>
+  <h2 class="reveal">4 niveles. Un solo link.</h2>
+  <p class="sub reveal">Mientras más referís, más ganás — sin límite de tiempo ni de personas a las que podés ofrecerles el beneficio.</p>
+  <div class="network-diagram reveal"><canvas id="levelsCanvas"></canvas></div>
+  <div class="lvl-legend">
+    <div class="lvl-tag"><span class="dot-c" style="background:var(--gold)"></span>Vos → <b>20%</b> nivel 1 (directo)</div>
+    <div class="lvl-tag"><span class="dot-c" style="background:var(--cyan)"></span>Niveles 2, 3 y 4 → <b>7%</b> c/u</div>
+  </div>
+  <div class="total-badge reveal">TOTAL POSIBLE POR LÍNEA: 41%</div>
+</section>
+
+<section id="calc">
+  <div class="eyebrow reveal">EJEMPLO NUMÉRICO</div>
+  <h2 class="reveal">Movelo vos mismo</h2>
+  <p class="sub reveal">Ajustá lo que dejó cada persona de tu línea y mirá cuánto cobrás.</p>
+  <div class="calc-card reveal">
+    <div class="row-in" id="fields"></div>
+    <div class="calc-result">
+      <span class="lab">Total ganado en esta línea</span>
+      <span class="num" id="total">$24.340</span>
+    </div>
+  </div>
+</section>
+
+<section id="pagos">
+  <div class="eyebrow reveal">PAGOS</div>
+  <h2 class="reveal">Todos los días. Sin excusas.</h2>
+  <div class="clockwrap">
+    <div class="clock reveal"><div class="hand h"></div><div class="hand m"></div></div>
+    <div class="paylist reveal">
+      <div>💸 <b>Frecuencia:</b> todos los días</div>
+      <div>🕐 <b>Corte:</b> 1 AM horario México</div>
+      <div>📊 <b>Cálculo:</b> sobre la ganancia neta de tus referidos ese día</div>
+      <div>⚠️ <b>Día en pérdida:</b> no se cobra, se retoma solo cuando vuelve la ganancia</div>
+      <div>🔁 Sin deuda acumulada — simplemente se pausa y sigue</div>
+    </div>
+  </div>
+</section>
+
+<section id="pasos">
+  <div class="eyebrow reveal">CÓMO EMPEZAR</div>
+  <h2 class="reveal">4 pasos. Cero inversión.</h2>
+  <div class="steps">
+    <div class="step reveal"><p>Registrate y pedí tu link único de socio</p></div>
+    <div class="step reveal"><p>Compartilo por redes, WhatsApp, donde quieras</p></div>
+    <div class="step reveal"><p>Cada persona que entra queda vinculada a vos para siempre</p></div>
+    <div class="step reveal"><p>Empezás a cobrar desde el primer día de ganancia</p></div>
+  </div>
+</section>
+
+<section id="cta">
+  <h2 class="reveal">¿Listo para ser socio?<br>Empezá hoy.</h2>
+  <p class="reveal">Sin invertir. Sin arriesgar. Solo compartiendo.</p>
+  <button class="btn reveal">📲 QUIERO MI LINK</button>
+</section>
+
+<footer>
+  <div class="recash-logo"><span class="dotmark"></span>RECASH</div>
+  <small>POWERED BY RECASH</small>
+</footer>
+
+<script>
+// scroll reveal
+const reveals = document.querySelectorAll('.reveal, .lvl');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      setTimeout(()=>e.target.classList.add('in'), i*80);
+    }
+  });
+},{threshold:.2});
+reveals.forEach(el=>io.observe(el));
+
+// nav dots
+const sections = document.querySelectorAll('section');
+const dotsWrap = document.getElementById('dots');
+sections.forEach((s,i)=>{
+  const d = document.createElement('div');
+  d.className='dot'+(i===0?' active':'');
+  d.onclick=()=>s.scrollIntoView({behavior:'smooth'});
+  dotsWrap.appendChild(d);
+});
+const dotEls = dotsWrap.querySelectorAll('.dot');
+const dotObserver = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      const idx = Array.from(sections).indexOf(e.target);
+      dotEls.forEach(d=>d.classList.remove('active'));
+      dotEls[idx].classList.add('active');
+    }
+  });
+},{threshold:.5});
+sections.forEach(s=>dotObserver.observe(s));
+
+// calculadora interactiva
+const people = [
+  {nombre:'Pedro', nivel:1, pct:0.20, base:100000},
+  {nombre:'Juan',  nivel:2, pct:0.07, base:2000},
+  {nombre:'Pepe',  nivel:3, pct:0.07, base:50000},
+  {nombre:'Ana',   nivel:4, pct:0.07, base:10000},
+];
+const fieldsWrap = document.getElementById('fields');
+const fmt = n => '$' + Math.round(n).toLocaleString('es-AR');
+
+people.forEach((p,idx)=>{
+  const div = document.createElement('div');
+  div.className='field';
+  div.innerHTML = `
+    <label>${p.nombre} <small>Nivel ${p.nivel} · ${Math.round(p.pct*1000)/10}%</small></label>
+    <input type="range" min="0" max="200000" step="500" value="${p.base}" data-idx="${idx}">
+    <span class="val">${fmt(p.base)}</span>
+  `;
+  fieldsWrap.appendChild(div);
+});
+
+function recalc(){
+  let total = 0;
+  fieldsWrap.querySelectorAll('input[type=range]').forEach(inp=>{
+    const idx = +inp.dataset.idx;
+    const p = people[idx];
+    const val = +inp.value;
+    inp.parentElement.querySelector('.val').textContent = fmt(val);
+    total += val * p.pct;
+  });
+  document.getElementById('total').textContent = fmt(total);
+}
+fieldsWrap.addEventListener('input', recalc);
+recalc();
+
+// ---------- Red animada (hero) ----------
+function setupCanvas(canvas){
+  const dpr = window.devicePixelRatio || 1;
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = rect.width * dpr;
+  canvas.height = rect.height * dpr;
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr,dpr);
+  return {ctx, w:rect.width, h:rect.height};
+}
+
+function heroNetwork(){
+  const canvas = document.getElementById('heroCanvas');
+  const {ctx,w,h} = setupCanvas(canvas);
+  const N = 22;
+  const nodes = Array.from({length:N}, ()=>({
+    x: Math.random()*w, y: Math.random()*h,
+    vx:(Math.random()-.5)*0.35, vy:(Math.random()-.5)*0.35,
+    r: Math.random()*2+1.5
+  }));
+  function frame(){
+    ctx.clearRect(0,0,w,h);
+    nodes.forEach(n=>{
+      n.x+=n.vx; n.y+=n.vy;
+      if(n.x<0||n.x>w) n.vx*=-1;
+      if(n.y<0||n.y>h) n.vy*=-1;
+    });
+    for(let i=0;i<N;i++){
+      for(let j=i+1;j<N;j++){
+        const a=nodes[i], b=nodes[j];
+        const d = Math.hypot(a.x-b.x, a.y-b.y);
+        if(d < w*0.22){
+          ctx.strokeStyle = `rgba(232,196,105,${1-d/(w*0.22)})`;
+          ctx.lineWidth = 0.7;
+          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+        }
+      }
+    }
+    nodes.forEach(n=>{
+      ctx.beginPath();
+      ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      ctx.fillStyle = '#2dd4e0';
+      ctx.shadowColor='#2dd4e0'; ctx.shadowBlur=6;
+      ctx.fill();
+      ctx.shadowBlur=0;
+    });
+    requestAnimationFrame(frame);
+  }
+  frame();
+}
+heroNetwork();
+
+// ---------- Red por niveles ----------
+function levelsNetwork(){
+  const canvas = document.getElementById('levelsCanvas');
+  const {ctx,w,h} = setupCanvas(canvas);
+
+  // construir estructura: 1 raiz -> 2 nivel1 -> cada uno 2 nivel2 -> etc (4 niveles)
+  const levels = [1,2,3,3]; // cantidad de nodos por nivel (visual, no literal)
+  const colors = ['#e8c469','#2dd4e0','#2dd4e0','#2dd4e0'];
+  const pcts = ['20%','7%','7%','7%'];
+  const rows = [];
+  const marginY = 50;
+  const stepY = (h - marginY*2) / (levels.length-1);
+
+  levels.forEach((count,li)=>{
+    const y = marginY + stepY*li;
+    const nodes = [];
+    for(let i=0;i<count;i++){
+      const x = w/2 + (i - (count-1)/2) * (w/(count+1.4));
+      nodes.push({x,y, baseX:x, baseY:y, phase:Math.random()*Math.PI*2});
+    }
+    rows.push(nodes);
+  });
+
+  let t = 0;
+  function frame(){
+    t += 0.012;
+    ctx.clearRect(0,0,w,h);
+
+    // mover levemente los nodos (efecto "red viva")
+    rows.forEach(row=>{
+      row.forEach(n=>{
+        n.x = n.baseX + Math.sin(t+n.phase)*6;
+        n.y = n.baseY + Math.cos(t*1.3+n.phase)*4;
+      });
+    });
+
+    // lineas de conexion entre niveles consecutivos
+    for(let li=0; li<rows.length-1; li++){
+      rows[li].forEach(a=>{
+        rows[li+1].forEach(b=>{
+          ctx.strokeStyle = 'rgba(232,196,105,0.25)';
+          ctx.lineWidth = 1;
+          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+        });
+      });
+    }
+
+    // nodos
+    rows.forEach((row,li)=>{
+      row.forEach(n=>{
+        ctx.beginPath();
+        ctx.arc(n.x,n.y, li===0?12:8, 0, Math.PI*2);
+        ctx.fillStyle = '#0c1424';
+        ctx.strokeStyle = colors[li];
+        ctx.lineWidth = 2.5;
+        ctx.fill(); ctx.stroke();
+      });
+    });
+
+    // etiquetas de nivel a la izquierda
+    ctx.font = "13px 'Bebas Neue', sans-serif";
+    ctx.textAlign = 'left';
+    rows.forEach((row,li)=>{
+      ctx.fillStyle = colors[li];
+      ctx.fillText(`NIVEL ${li+1} · ${pcts[li]}`, 8, row[0].baseY+4);
+    });
+
+    requestAnimationFrame(frame);
+  }
+  frame();
+}
+levelsNetwork();
+
+window.addEventListener('resize', ()=>{
+  location.reload();
+});
+</script>
+
+</body>
+</html>
