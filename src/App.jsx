@@ -225,9 +225,8 @@ export default function App() {
 
       <section id="hero">
         <h1>CONVERTITE EN SOCIO<br />SIN PONER UN PESO<br />PARA SIEMPRE</h1>
-        <div className="network-hero"><HeroNetwork /></div>
         <p className="sub">La casa siempre gana. Ahora vos también.</p>
-        <div className="phone-frame reveal">
+        <div className="phone-frame">
           <video src="/media/testimonio.mp4" controls playsInline preload="metadata" />
         </div>
         <div className="scroll-cue">SCROLL ↓</div>

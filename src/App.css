@@ -59,6 +59,7 @@ h1,h2{
 /* ---------- HERO ---------- */
 #hero{
   text-align:center;
+  perspective:900px;
 }
 #hero h1{
   font-size:clamp(44px,8vw,96px);
@@ -202,12 +203,21 @@ input[type=range]{flex:1;accent-color:var(--cyan);}
 .phone-frame{
   width:240px;aspect-ratio:9/16;margin:0 auto;
   border-radius:28px;padding:8px;
-  background:#0d1729;border:1px solid rgba(232,196,105,.25);
-  box-shadow:0 0 50px rgba(232,196,105,.15);
+  background:#0d1729;border:3px solid var(--cyan);
+  animation:phoneSpinIn 1s ease-out forwards, phoneGlow 2.2s ease-in-out 1s infinite;
 }
 .phone-frame video{
   width:100%;height:100%;object-fit:cover;border-radius:20px;display:block;
   background:#000;
+}
+@keyframes phoneSpinIn{
+  0%{transform:rotateY(180deg) scale(.7);opacity:0;}
+  70%{transform:rotateY(-15deg) scale(1.03);}
+  100%{transform:rotateY(0) scale(1);opacity:1;}
+}
+@keyframes phoneGlow{
+  0%,100%{box-shadow:0 0 20px 2px rgba(45,212,224,.35);}
+  50%{box-shadow:0 0 42px 10px rgba(45,212,224,.75);}
 }
 
 /* ---------- CTA ---------- */
