@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Redirigiendo...</title>
+<style>
+  body{
+    margin:0;height:100vh;display:flex;align-items:center;justify-content:center;
+    background:#060a14;color:#eef2f8;font-family:sans-serif;text-align:center;
+  }
+  .box{opacity:.85;}
+  .spinner{
+    width:34px;height:34px;border-radius:50%;
+    border:3px solid rgba(232,196,105,.25); border-top-color:#e8c469;
+    animation:spin 1s linear infinite; margin:0 auto 16px;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+  <div class="box">
+    <div class="spinner"></div>
+    <p>Te estamos conectando con un asesor...</p>
+  </div>
+
+<script>
+/* =======================================================
+   👉 ACÁ EDITÁS LOS NÚMEROS/LINKS DE WHATSAPP
+   Agregá, sacá o cambiá líneas de este array.
+   Formato del link: https://wa.me/NUMERO (con código de país, sin + ni espacios)
+   ======================================================= */
+const LINKS = [
+  "https://wa.me/5215500000001",
+  "https://wa.me/5215500000002",
+  "https://wa.me/5215500000003",
+];
+
+/* Nombre único para este contador (no lo cambies salvo que quieras
+   arrancar la rotación de cero con un contador nuevo) */
+const COUNTER_KEY = "genshinmex-wsp-round-robin-v1";
+
+async function redirigir() {
+  let index = 0;
+  try {
+    // Contador público compartido: cada visita suma 1 y todos ven el mismo total
+    const res = await fetch(
+      `https://api.countapi.xyz/hit/${COUNTER_KEY}/clicks`
+    );
+    const data = await res.json();
+    index = data.value % LINKS.length;
+  } catch (e) {
+    // Si el contador falla (sin internet al servicio, etc.) elegimos al azar
+    // para no dejar a la persona sin destino.
+    index = Math.floor(Math.random() * LINKS.length);
+  }
+  window.location.replace(LINKS[index]);
+}
+
+redirigir();
+</script>
+</body>
+</html>

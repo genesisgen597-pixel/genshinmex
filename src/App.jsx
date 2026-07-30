@@ -227,6 +227,9 @@ export default function App() {
         <h1>CONVERTITE EN SOCIO<br />SIN PONER UN PESO<br />PARA SIEMPRE</h1>
         <div className="network-hero"><HeroNetwork /></div>
         <p className="sub">La casa siempre gana. Ahora vos también.</p>
+        <div className="phone-frame reveal">
+          <video src="/media/testimonio.mp4" controls playsInline preload="metadata" />
+        </div>
         <div className="scroll-cue">SCROLL ↓</div>
       </section>
 
@@ -289,7 +292,7 @@ export default function App() {
       <section id="cta">
         <h2 className="reveal">¿Listo para ser socio?<br />Empezá hoy.</h2>
         <p className="reveal">Sin invertir. Sin arriesgar. Solo compartiendo.</p>
-        <button className="btn reveal">📲 QUIERO MI LINK</button>
+        <a href="/wsp.html" className="btn reveal">📲 QUIERO MI LINK</a>
       </section>
 
       <footer>
